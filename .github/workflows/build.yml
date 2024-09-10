@@ -30,7 +30,7 @@ jobs:
     with:
       containerfile: Dockerfile-alpine
       image: "$GITHUB_REPOSITORY"
-      tag: "alpine-${{ github.ref_name }}" # must be lowercase
+      tag: "alpine"
       update-check: "apk update &>/dev/null && apk version -q -l '>'"
     secrets: inherit
 
@@ -40,6 +40,6 @@ jobs:
     with:
       containerfile: Dockerfile
       image: "$GITHUB_REPOSITORY"
-      tag: "debian-${{ github.ref_name }}" # must be lowercase
+      tag: "debian"
       update-check: "apt-get update &>/dev/null && apt-get upgrade -s | grep '^Inst' || true"
     secrets: inherit
