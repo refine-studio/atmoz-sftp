@@ -96,8 +96,8 @@ jobs:
             --label="org.opencontainers.image.revision=$GITHUB_SHA" \
             --label="org.opencontainers.image.created=$(date --rfc-3339=seconds)"
 
-      # - name: Test image
-      #   run: tests/run "${{ inputs.image }}:${{ inputs.tag }}"
+      - name: Test image
+        run: tests/run "${{ inputs.image }}:${{ inputs.tag }}"
 
       - name: Save image
         run: docker save -o "${{ inputs.tag }}.tar" "${{ inputs.image }}:${{ inputs.tag }}"
@@ -112,7 +112,7 @@ jobs:
   push:
     runs-on: ubuntu-latest
     needs: build
-    # if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v4
 
@@ -133,11 +133,3 @@ jobs:
           docker tag "${{ inputs.image }}:${{ inputs.tag }}" $github_tag
           docker push "$github_tag"
           docker logout docker.pkg.github.com
-
-      # - name: Push images to Docker Hub registry
-      #   run: |
-      #     echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login \
-      #       -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-
-      #     docker push "${{ inputs.image }}:${{ inputs.tag }}"
-      #     docker logout

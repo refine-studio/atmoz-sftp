@@ -19,12 +19,6 @@ jobs:
         with:
           fetch-depth: 0 # for proper signature verification
 
-      # - name: Verify signature
-      #   if: github.repository == 'atmoz/sftp'
-      #   uses: atmoz/git-verify-ref@master
-      #   with:
-      #     import-github-users: atmoz
-
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
         with:
