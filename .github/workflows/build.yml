@@ -46,6 +46,6 @@ jobs:
     with:
       containerfile: Dockerfile
       image: "$GITHUB_REPOSITORY"
-      tag: "debian-$github.ref_name" # must be lowercase
+      tag: "debian-${{ github.ref_name }}" # must be lowercase
       update-check: "apt-get update &>/dev/null && apt-get upgrade -s | grep '^Inst' || true"
     secrets: inherit
