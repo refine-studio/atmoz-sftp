@@ -129,7 +129,7 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com \
             -u ${{ github.actor }} --password-stdin
 
-          github_tag=docker.pkg.github.com/${{ inputs.image }}/${{ inputs.tag }}
+          github_tag=docker.pkg.github.com/${{ inputs.image }}:${{ inputs.tag }}
           docker tag "${{ inputs.image }}:${{ inputs.tag }}" $github_tag
           docker push "$github_tag"
           docker logout docker.pkg.github.com
