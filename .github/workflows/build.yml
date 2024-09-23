@@ -1,8 +1,8 @@
 name: build
 
 on:
-  schedule:
-    - cron: "0 12 * * *"
+  # schedule:
+  #   - cron: "0 12 * * *"
   push:
     paths-ignore:
       - "*.md"
@@ -19,12 +19,6 @@ jobs:
         with:
           fetch-depth: 0 # for proper signature verification
 
-      - name: Verify signature
-        if: github.repository == 'atmoz/sftp'
-        uses: atmoz/git-verify-ref@master
-        with:
-          import-github-users: atmoz
-
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
         with:
@@ -36,7 +30,7 @@ jobs:
     with:
       containerfile: Dockerfile-alpine
       image: "$GITHUB_REPOSITORY"
-      tag: alpine
+      tag: "alpine"
       update-check: "apk update &>/dev/null && apk version -q -l '>'"
     secrets: inherit
 
@@ -46,6 +40,6 @@ jobs:
     with:
       containerfile: Dockerfile
       image: "$GITHUB_REPOSITORY"
-      tag: debian
+      tag: "debian"
       update-check: "apt-get update &>/dev/null && apt-get upgrade -s | grep '^Inst' || true"
     secrets: inherit

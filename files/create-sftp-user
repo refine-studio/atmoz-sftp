@@ -70,6 +70,14 @@ mkdir -p "/home/$user"
 chown root:root "/home/$user"
 chmod 755 "/home/$user"
 
+# Create Home Directory within ChRoot
+if [[ $(grep -c 'ChrootDirectory' /etc/ssh/sshd_config) -gt 0 && $(grep -c 'ChrootDirectory none' /etc/ssh/sshd_config) -eq 0 ]]; then
+    HOME="/home/$user/home/$user"
+    mkdir -p "${HOME}"
+    chmod 700 "${HOME}"
+    chown "${user}:${gid}" "${HOME}"
+fi
+
 # Retrieving user id to use it in chown commands instead of the user name
 # to avoid problems on alpine when the user name contains a '.'
 uid="$(id -u "$user")"
